@@ -1,7 +1,7 @@
-function [SIG_allcmpts,mean_SIG_allcmpts,ADC_allcmpts,Diff_allcmpts]=simSomaSig(rcell,bvecs,blist,smalldelta,bigdelta,tempdir)
+function [SIG_cmpts,mean_SIG_cmpts,ADC_cmpts]=simAxonSig(rcell,kcell,bvecs,blist,smalldelta,bigdelta,tempdir)
 
 % set up structural files
-setup=setup_1sphere_custom(rcell,blist,smalldelta,bigdelta,bvecs,tempdir)
+setup=setup_1axon_custom(rcell,kcell,blist,smalldelta,bigdelta,bvecs,tempdir)
 
 % Set up the PDE model in the geometrical compartments.
 setup.pde = prepare_pde(setup);
@@ -54,12 +54,23 @@ if isfield(setup, "mf")
     mf_fit = fit_signal(mf.signal, mf.signal_allcmpts, setup.gradient.bvalues);
 
 end
-ADC_allcmpts=mf_fit.adc_allcmpts;
-SIG_allcmpts=abs(mf.signal_allcmpts);
-mean_SIG_allcmpts=SIG_allcmpts./SIG_allcmpts(1);
-
-Diff_allcmpts=-blist(blist<=1000)'\log(mean_SIG_allcmpts(blist<=1000));
-
+ADC_cmpts=squeeze(mf_fit.adc);
+mf.signal=abs(mf.signal);
+mf.signal=permute(mf.signal,[4 1 2 3]);
+SIG_cmpts=zeros(1+300*numel(find(setup.gradient.values>0)),ncompartment);
+mean_SIG_cmpts=zeros(length(setup.gradient.values),ncompartment);
+for i=1:ncompartment
+    for ib=1:length(setup.gradient.values)
+        if setup.gradient.values(ib)==0
+           SIG_cmpts(1,i)=mean(mf.signal(:,i,ib),1);
+           mean_SIG_cmpts(ib,i)=SIG_cmpts(1,i);
+        else            
+           SIG_cmpts(1+[1:ndirection]+(find(setup.gradient.values==setup.gradient.values(ib))-2)*length(ndirection),i)=mf.signal(:,i,find(setup.gradient.values==setup.gradient.values(ib)));
+           mean_SIG_cmpts(ib,i)=mean(SIG_cmpts(1+[1:ndirection]+(find(setup.gradient.values==setup.gradient.values(ib))-2)*length(ndirection),i));
+        end
+    end
+end
+mean_SIG_cmpts=mean_SIG_cmpts./max(mean_SIG_cmpts);
 rmdir([setup.name '_dir'],'s');
 delete([setup.name '_cells']);
 
