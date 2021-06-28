@@ -57,7 +57,7 @@ setup.geometry.include_in = true;                       % Ratio Rin/R, within ra
 setup.geometry.in_ratio = 0.6;                          % Ratio Rin/R, within range [0,0.99]
 setup.geometry.ecs_shape = "tight_wrap";                % Shape of ECS: "no_ecs", "box", "convex_hull", or "tight_wrap".
 setup.geometry.ecs_ratio = 0.5;                         % ECS gap; percentage in side length
-setup.geometry.refinement  = 8;                         % Tetgen refinement parameter (comment for automatic)
+%setup.geometry.refinement  = 8;                         % Tetgen refinement parameter (comment for automatic)
 
 %% PDE parameters
 setup.pde.diffusivity_in = 0.002;                       % Diffusion coefficient IN (scalar or 3x3-tensor)

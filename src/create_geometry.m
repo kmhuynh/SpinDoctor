@@ -58,6 +58,9 @@ assert(ismember(setup.geometry.ecs_shape, ["no_ecs" "box" "convex_hull" "tight_w
 parts = split(filename, "/");
 if length(parts) >= 2
     folder = join(parts(1:end-1), "/");
+    if iscell(folder)
+        folder=char(folder)
+    end
     if ~isfolder(folder)
         mkdir(folder);
     end

@@ -9,15 +9,20 @@ function call_tetgen(filename, refinement)
 
 
 % Tetgen command for corresponding operating system
+
+tmpstr=which('call_tetgen');
+tmpstr=tmpstr(1:end-22);
+
+
 if ispc
-    tetgen_cmd = "src\tetgen\win64\tetgen";
+    tetgen_cmd = fullfile(tmpstr,"tetgen\win64\tetgen");
 elseif ismac
-    tetgen_cmd = "src/tetgen/mac64/tetgen";
+    tetgen_cmd = fullfile(tmpstr,"tetgen/mac64/tetgen");
 elseif isunix
-    tetgen_cmd = "src/tetgen/lin64/tetgen";
+    tetgen_cmd = fullfile(tmpstr,"tetgen/lin64/tetgen");
 else
     warning("Using Linux Tetgen command.")
-    tetgen_cmd = "src/tetgen/tetGen/lin64/tetgen";
+    tetgen_cmd = fullfile(tmpstr,"tetgen/lin64/tetgen");
 end
 
 % Options for Tetgen command
