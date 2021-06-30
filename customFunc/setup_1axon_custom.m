@@ -51,6 +51,7 @@ if isempty(tempdir)
     tempdir=pwd;
 end
 rndStr=char(randi([97 122],1,20));
+rndStr=['Axon_R_' num2str(rcell) '_K_' num2str(kcell) '_' rndStr];
 setup.name = fullfile(tempdir,'mesh_files','cylinders',rndStr);
 
 

@@ -52,6 +52,7 @@ if isempty(tempdir)
     tempdir=pwd;
 end
 rndStr=char(randi([97 122],1,20));
+rndStr=['Soma_R_' num2str(rcell) '_' rndStr];
 setup.name = fullfile(tempdir,'mesh_files','spheres',rndStr);
 
 
