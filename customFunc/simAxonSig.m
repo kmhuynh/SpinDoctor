@@ -1,4 +1,4 @@
-function [SIG_cmpts,mean_SIG_cmpts,ADC_cmpts]=simAxonSig(rcell,kcell,bvecs,blist,smalldelta,bigdelta,tempdir)
+function [SIG_cmpts,mean_SIG_cmpts]=simAxonSig(rcell,kcell,bvecs,blist,smalldelta,bigdelta,tempdir)
 
 % set up structural files
 setup=setup_1axon_custom(rcell,kcell,blist,smalldelta,bigdelta,bvecs,tempdir)
@@ -51,10 +51,10 @@ if isfield(setup, "mf")
     mf = solve_mf(femesh, setup, lap_eig);
 
     % Fit ADC from MF signal
-    mf_fit = fit_signal(mf.signal, mf.signal_allcmpts, setup.gradient.bvalues);
+    %mf_fit = fit_signal(mf.signal, mf.signal_allcmpts, setup.gradient.bvalues);
 
 end
-ADC_cmpts=squeeze(mf_fit.adc);
+%ADC_cmpts=squeeze(mf_fit.adc);
 mf.signal=abs(mf.signal);
 mf.signal=permute(mf.signal,[4 1 2 3]);
 SIG_cmpts=zeros(1+300*numel(find(setup.gradient.values>0)),ncompartment);
