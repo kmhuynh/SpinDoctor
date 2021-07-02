@@ -65,8 +65,8 @@ for i=1:ncompartment
            SIG_cmpts(1,i)=mean(mf.signal(:,i,ib),1);
            mean_SIG_cmpts(ib,i)=SIG_cmpts(1,i);
         else            
-           SIG_cmpts(1+[1:ndirection]+(find(setup.gradient.values==setup.gradient.values(ib))-2)*length(ndirection),i)=mf.signal(:,i,find(setup.gradient.values==setup.gradient.values(ib)));
-           mean_SIG_cmpts(ib,i)=mean(SIG_cmpts(1+[1:ndirection]+(find(setup.gradient.values==setup.gradient.values(ib))-2)*length(ndirection),i));
+           SIG_cmpts(1+[1:ndirection]+(find(setup.gradient.values==setup.gradient.values(ib))-2)*ndirection,i)=mf.signal(:,i,find(setup.gradient.values==setup.gradient.values(ib)));
+           mean_SIG_cmpts(ib,i)=mean(SIG_cmpts(1+[1:ndirection]+(find(setup.gradient.values==setup.gradient.values(ib))-2)*ndirection,i));
         end
     end
 end
