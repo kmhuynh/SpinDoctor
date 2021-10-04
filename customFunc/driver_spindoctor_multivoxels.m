@@ -7,8 +7,8 @@
 %   The user is advised to read the latest version
 %   from \url{https://github.com/jingrebeccali/SpinDoctor}
 
-clear
-restoredefaultpath
+%clear
+%restoredefaultpath
 
 % Add SpinDoctor
 addpath(genpath("src"));
@@ -19,12 +19,12 @@ addpath(genpath("src"));
 % Get setup
 addpath setups
 
- setup_1axon_analytical;
+% setup_1axon_analytical;
 % setup_1sphere_analytical;
 % setup_15spheres;
 % setup_2axons_deform;
 % setup_5axons_myelin_relax;
-% setup_neuron;
+ setup_neuron_multivoxels;
 % setup_4axons_flat;
 % setup_30axons_flat;
 % setup_30axons;
@@ -91,13 +91,13 @@ end
 %% Perform BTPDE experiments
 if isfield(setup, "btpde")
     % Solve BTPDE
-    btpde = solve_btpde(femesh, setup);
+    btpde = solve_btpde_multivoxels(femesh, setup);
 
     % Fit ADC from signal
-    btpde_fit = fit_signal(btpde.signal, btpde.signal_allcmpts, setup.gradient.bvalues);
+    %btpde_fit = fit_signal(btpde.signal, btpde.signal_allcmpts, setup.gradient.bvalues);
 
     % BTPDE direction averaged magnetization
-    btpde.magnetization_avg = average_magnetization(btpde.magnetization);
+    %btpde.magnetization_avg = average_magnetization(btpde.magnetization);
 end
 
 
@@ -280,5 +280,5 @@ if isfield(setup, "mf")
     end
 end
 
-%%
-plot_hardi(setup.gradient.directions, karger.signal_allcmpts / initial_signal, "Karger signal")
+% %%
+% plot_hardi(setup.gradient.directions, karger.signal_allcmpts / initial_signal, "Karger signal")

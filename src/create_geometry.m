@@ -110,9 +110,9 @@ parts = split(filename, "/");
 fname_tetgen = save_meshdir_path + "/" + parts(end) + refinement_str + "_mesh";
 
 % Read or create surface triangulation
-if isfile(fname_tetgen + ".node") && isfile(fname_tetgen + ".poly")
-    surfaces = read_surfaces(fname_tetgen);
-else
+%if isfile(fname_tetgen + ".node") && isfile(fname_tetgen + ".poly")
+%    surfaces = read_surfaces(fname_tetgen);
+%else
     switch cell_shape
         case "sphere"
             % Create surface geometry of spheres
@@ -132,7 +132,7 @@ else
         % plot_surface_triangulation(surfaces);
         save_surfaces(fname_tetgen, surfaces);
     end
-end
+%end
 
 % Add ".1" suffix to output file name, since this is what Tetgen does
 fname_tetgen_femesh = fname_tetgen + ".1";
@@ -143,8 +143,8 @@ else
     tetgen_params = {};
 end
 
-if isfile(fname_tetgen_femesh + ".node")
-elseif is_stl
+%if isfile(fname_tetgen_femesh + ".node")
+if is_stl
     call_tetgen(filename + ".stl", tetgen_params{:});
     fname_tetgen_femesh = filename + ".1";
 else

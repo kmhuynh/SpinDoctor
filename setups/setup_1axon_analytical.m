@@ -51,13 +51,13 @@ setup.geometry.rmin = 5;                                % Minimum radius
 setup.geometry.rmax = 5;                                % Maximum radius
 setup.geometry.dmin = 0.2;                              % Minimum distance between cells (times mean(rmin,rmax))
 setup.geometry.dmax = 0.3;                              % Maximum distance between cells (times mean(rmin,rmax))
-setup.geometry.height = 50;                             % Cylinder height (ignored if not cylinder)
+setup.geometry.height = 1000;                             % Cylinder height (ignored if not cylinder)
 setup.geometry.deformation = [0; 0];                    % Domain deformation; [a_bend,a_twist]
-setup.geometry.include_in = true;                       % Ratio Rin/R, within range [0,0.99]
+setup.geometry.include_in = false;                       % Ratio Rin/R, within range [0,0.99]
 setup.geometry.in_ratio = 0.6;                          % Ratio Rin/R, within range [0,0.99]
-setup.geometry.ecs_shape = "tight_wrap";                % Shape of ECS: "no_ecs", "box", "convex_hull", or "tight_wrap".
-setup.geometry.ecs_ratio = 0.5;                         % ECS gap (times rmean)
-setup.geometry.refinement  = 1;                         % Tetgen refinement parameter (comment for automatic)
+setup.geometry.ecs_shape = "box";                % Shape of ECS: "no_ecs", "box", "convex_hull", or "tight_wrap".
+setup.geometry.ecs_ratio = 1000/2/5;                         % ECS gap (times rmean)
+%setup.geometry.refinement  = 1;                         % Tetgen refinement parameter (comment for automatic)
 
 %% PDE parameters
 setup.pde.diffusivity_in = 0.002;                       % Diffusion coefficient IN (scalar or 3x3-tensor)
@@ -76,27 +76,27 @@ setup.pde.permeability_out = 0;                         % Permeability OUT bound
 setup.pde.permeability_ecs = 0;                         % Permeability ECS boundary
 
 %% Gradient sequences
-setup.gradient.values = 0:500:10000;                    % g-, q-, or b-values [1 x namplitude]
+setup.gradient.values = 0:500:500;                    % g-, q-, or b-values [1 x namplitude]
 setup.gradient.values_type = "b";                       % Type of values: "g", "q", or "b" or "g"
 setup.gradient.sequences = {                            % Gradient sequences {1 x nsequence}
-    PGSE(5000, 10000)
-    PGSE(10000, 100000)
+    PGSE(12000, 42000)
+    %PGSE(10000, 100000)
 }';
 setup.gradient.directions = [1.0; 0.0; 0.0];            % Gradient directions [3 x ndirection]
 
-%% BTPDE experiment parameters (comment block to skip experiment)
-setup.btpde.ode_solver = @ode15s;                       % ODE solver for BTPDE
-setup.btpde.reltol = 1e-4;                              % Relative tolerance for ODE solver
-setup.btpde.abstol = 1e-6;                              % Absolute tolerance for ODE solver
+% %% BTPDE experiment parameters (comment block to skip experiment)
+% setup.btpde.ode_solver = @ode15s;                       % ODE solver for BTPDE
+% setup.btpde.reltol = 1e-4;                              % Relative tolerance for ODE solver
+% setup.btpde.abstol = 1e-6;                              % Absolute tolerance for ODE solver
 
 %% BTPDE midpoint experiment parameters (comment block to skip experiment)
 % setup.btpde_midpoint.implicitness = 0.5;              % Theta-parameter: 0.5 for Crank-Nicolson
 % setup.btpde_midpoint.timestep = 5;                    % Time step dt
 
 %% HADC experiment parameters (comment block to skip experiment)
-setup.hadc.ode_solver = @ode15s;                        % ODE solver for HADC
-setup.hadc.reltol = 1e-4;                               % Relative tolerance for ODE solver
-setup.hadc.abstol = 1e-4;                               % Absolute tolerance for ODE solver
+% setup.hadc.ode_solver = @ode15s;                        % ODE solver for HADC
+% setup.hadc.reltol = 1e-4;                               % Relative tolerance for ODE solver
+% setup.hadc.abstol = 1e-4;                               % Absolute tolerance for ODE solver
 
 %% MF experiment parameters (comment block to skip experiment)
 setup.mf.length_scale = 1;                              % Minimum length scale of eigenfunctions
@@ -104,8 +104,8 @@ setup.mf.neig_max = 1000;                               % Requested number of ei
 setup.mf.ninterval = 500;                               % Number of intervals to discretize time profile in MF (if not PGSE)
 
 %% Analytical experiment parameters (comment block to skip experiment)
-setup.analytical.length_scale = 0.3;                    % Minimum length scale of eigenfunctions
-setup.analytical.eigstep = 1e-8;                        % Minimum distance between eigenvalues
+% setup.analytical.length_scale = 0.3;                    % Minimum length scale of eigenfunctions
+% setup.analytical.eigstep = 1e-8;                        % Minimum distance between eigenvalues
 
 %% Karger model parameters (comment block to skip experiment)
 % setup.karger.ndirection = 50;                         % Number of directions to compute diffusion tensor
